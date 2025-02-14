@@ -7,7 +7,7 @@ BINDIR=$(PREFIX)/bin
 
 all: diff
 
-diff:
+diff: cmd/diff/main.ha
 	$(HARE) build $(HAREFLAGS) -o $@ cmd/$@/
 
 clean:
