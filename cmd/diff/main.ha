@@ -4,10 +4,7 @@ use os;
 use strings;
 
 export fn main() void = {
-    fmt::println("Enter 2 files to compare:")!;
-    const path = bufio::read_line(os::stdin)! as []u8;
-    const other_path = bufio::read_line(os::stdin)! as []u8;
-    const path = strings::fromutf8(path)!;
-    const other_path = strings::fromutf8(other_path)!;
+    const path = os::args[1];
+    const other_path = os::args[2];
     fmt::printfln("Comparing file '{}' to '{}'", path, other_path)!;
 };
