@@ -16,3 +16,8 @@ export fn main() void = {
 
     fmt::printfln("Comparing file '{}' to '{}'", path, other_path)!;
 };
+
+
+fn compare() uint = {
+    return 0;
+};
