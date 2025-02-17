@@ -1,7 +1,6 @@
 use fmt;
 
 export fn main() void = {
-
-
-    fmt::println("Hello world!")!;
+    const hello_str = "Hello world!";
+    fmt::println(hello_str)!;
 };
