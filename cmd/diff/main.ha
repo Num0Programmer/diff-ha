@@ -34,6 +34,7 @@ fn compare_files(lhh: io::handle, rhh: io::handle) uint = {
     let lhh_i = 0z;
     let rhh_i = 0z;
     let rhh_mis_buffer: []str = [];
+    // TODO: fix leak above!
 
 
     for (let i = 0z; lhh_i < lhh_num_lines && rhh_i < rhh_num_lines; i += 1) {
