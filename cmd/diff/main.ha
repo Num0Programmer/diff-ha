@@ -33,20 +33,19 @@ fn compare_files(lhh: io::handle, rhh: io::handle) uint = {
     // iteration
     let lhh_i = 0z;
     let rhh_i = 0z;
-    let rhh_mis_buffer: []str = [];
-    // TODO: fix leak above!
+    let rhh_mis_buffer: []*str = [];
 
 
     for (let i = 0z; lhh_i < lhh_num_lines && rhh_i < rhh_num_lines; i += 1) {
         for (let j = 0z;
                 rhh_i < rhh_num_lines && lhh_lines[lhh_i] != rhh_lines[rhh_i];
                 rhh_i += 1) {
-            append(rhh_mis_buffer, rhh_lines[rhh_i])!;
+            append(rhh_mis_buffer, &rhh_lines[rhh_i])!;
         };
         if (len(rhh_mis_buffer) > 0) {
             fmt::printfln("< {}\n---", lhh_lines[lhh_i])!;
             for (let j = 0z; j < len(rhh_mis_buffer); j += 1) {
-                fmt::printfln("> {}", rhh_mis_buffer[j])!;
+                fmt::printfln("> {}", *rhh_mis_buffer[j])!;
             };
             fmt::println()!;
         };
@@ -54,6 +53,8 @@ fn compare_files(lhh: io::handle, rhh: io::handle) uint = {
         lhh_i += 1;
         rhh_i += 1;
     };
+
+    free(rhh_mis_buffer);
 
     return 0;
 };
