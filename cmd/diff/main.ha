@@ -48,6 +48,9 @@ fn compare_files(lhh: io::handle, rhh: io::handle) uint = {
                 fmt::printfln("> {}", *rhh_mis_buffer[j])!;
             };
             fmt::println()!;
+            for (let j = 0z; j < len(rhh_mis_buffer); j += 1) {
+                delete(rhh_mis_buffer[j]);
+            };
         };
 
         lhh_i += 1;
