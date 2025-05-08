@@ -14,7 +14,6 @@ export fn main() void = {
     const other_path = os::args[2];
     const other_fh = os::open(other_path)!;
 
-    fmt::printfln("Comparing file '{}' to '{}'\n", path, other_path)!;
     compare_files(fh, other_fh);
 };
 
