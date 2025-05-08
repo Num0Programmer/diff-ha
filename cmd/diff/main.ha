@@ -33,23 +33,40 @@ fn compare_files(lhh: io::handle, rhh: io::handle) uint = {
     // iteration
     let lhh_i = 0z;
     let rhh_i = 0z;
+    let cmp_res = 0i;
     let rhh_mis_buffer: []*str = [];
+    let lhh_mis_buffer: []*str = [];
 
 
     for (let i = 0z; lhh_i < lhh_num_lines && rhh_i < rhh_num_lines; i += 1) {
         for (let j = 0z;
-                rhh_i < rhh_num_lines && lhh_lines[lhh_i] != rhh_lines[rhh_i];
-                rhh_i += 1) {
-            append(rhh_mis_buffer, &rhh_lines[rhh_i])!;
-        };
-        if (len(rhh_mis_buffer) > 0) {
-            fmt::printfln("< {}\n---", lhh_lines[lhh_i])!;
-            for (let j = 0z; j < len(rhh_mis_buffer); j += 1) {
-                fmt::printfln("> {}", *rhh_mis_buffer[j])!;
+                rhh_i < rhh_num_lines && lhh_i < lhh_num_lines;
+                j += 1) {
+            // fmt::printfln("'{}' -> '{}'", rhh_lines[rhh_i], lhh_lines[lhh_i])!;
+            cmp_res = strings::compare(rhh_lines[rhh_i], lhh_lines[lhh_i]);
+            if (cmp_res < 0) {
+                append(rhh_mis_buffer, &rhh_lines[rhh_i])!;
+                rhh_i += 1;
+            } else if (cmp_res > 0) {
+                append(lhh_mis_buffer, &lhh_lines[lhh_i])!;
+                lhh_i += 1;
+            } else {
+                break;
             };
-            fmt::println()!;
+        };
+        if (len(rhh_mis_buffer) > 0 && len(lhh_mis_buffer) > 0) {
+            for (let j = 0z; j < len(rhh_mis_buffer); j += 1) {
+                fmt::printfln("< {}", *rhh_mis_buffer[j])!;
+            };
+            fmt::println("---")!;
+            for (let j = 0z; j < len(lhh_mis_buffer); j += 1) {
+                fmt::printfln("> {}", *lhh_mis_buffer[j])!;
+            };
             for (let j = 0z; j < len(rhh_mis_buffer); j += 1) {
                 delete(rhh_mis_buffer[j]);
+            };
+            for (let j = 0z; j < len(lhh_mis_buffer); j += 1) {
+                delete(lhh_mis_buffer[j]);
             };
         };
 
@@ -58,6 +75,7 @@ fn compare_files(lhh: io::handle, rhh: io::handle) uint = {
     };
 
     free(rhh_mis_buffer);
+    free(lhh_mis_buffer);
 
     return 0;
 };
