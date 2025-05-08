@@ -42,7 +42,6 @@ fn compare_files(lhh: io::handle, rhh: io::handle) uint = {
         for (let j = 0z;
                 rhh_i < rhh_num_lines && lhh_i < lhh_num_lines;
                 j += 1) {
-            // fmt::printfln("'{}' -> '{}'", rhh_lines[rhh_i], lhh_lines[lhh_i])!;
             cmp_res = strings::compare(rhh_lines[rhh_i], lhh_lines[lhh_i]);
             if (cmp_res < 0) {
                 append(rhh_mis_buffer, &rhh_lines[rhh_i])!;
@@ -55,12 +54,12 @@ fn compare_files(lhh: io::handle, rhh: io::handle) uint = {
             };
         };
         if (len(rhh_mis_buffer) > 0 && len(lhh_mis_buffer) > 0) {
-            for (let j = 0z; j < len(rhh_mis_buffer); j += 1) {
-                fmt::printfln("< {}", *rhh_mis_buffer[j])!;
+            for (let j = 0z; j < len(lhh_mis_buffer); j += 1) {
+                fmt::printfln("< {}", *lhh_mis_buffer[j])!;
             };
             fmt::println("---")!;
-            for (let j = 0z; j < len(lhh_mis_buffer); j += 1) {
-                fmt::printfln("> {}", *lhh_mis_buffer[j])!;
+            for (let j = 0z; j < len(rhh_mis_buffer); j += 1) {
+                fmt::printfln("> {}", *rhh_mis_buffer[j])!;
             };
             for (let j = 0z; j < len(rhh_mis_buffer); j += 1) {
                 delete(rhh_mis_buffer[j]);
